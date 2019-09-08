@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ArtworkManager.Models;
+using ArtworkManager.Models.ViewModels;
 
 namespace ArtworkManager.Controllers
 {

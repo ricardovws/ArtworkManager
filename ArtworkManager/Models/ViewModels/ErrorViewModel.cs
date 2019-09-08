@@ -1,6 +1,6 @@
 using System;
 
-namespace ArtworkManager.Models
+namespace ArtworkManager.Models.ViewModels
 {
     public class ErrorViewModel
     {
