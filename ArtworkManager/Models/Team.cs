@@ -9,5 +9,17 @@ namespace ArtworkManager.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ICollection<Author> Authors { get; set; } = new List<Author>();
+
+        public Team()
+        {
+
+        }
+
+        public Team(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace ArtworkManager.Models
         {
         }
 
-        public DbSet<ArtworkManager.Models.Team> Team { get; set; }
+        public DbSet<Team> Team { get; set; }
+        public DbSet<Author> Author { get; set; }
+        public DbSet<Artwork> Artwork { get; set; }
     }
 }
