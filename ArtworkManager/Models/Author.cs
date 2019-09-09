@@ -27,5 +27,7 @@ namespace ArtworkManager.Models
             Email = email;
             Team = team;
         }
+
+
     }
 }
