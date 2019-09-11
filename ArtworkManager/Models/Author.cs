@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ArtworkManager.Models
 {
@@ -13,7 +14,7 @@ namespace ArtworkManager.Models
         public string Email { get; set; }
         public Team Team { get; set; }
         public ICollection<Artwork> Artworks { get; set; } = new List<Artwork>();
-
+        
         public Author()
         {
 
@@ -28,6 +29,33 @@ namespace ArtworkManager.Models
             Team = team;
         }
 
+        public void LoadCodePack(Author author)
+        {
+            
+            try
+            {
+                string sourcepath = @"c:\teste1\RS85424.csv";
+                string[] lines = File.ReadAllLines(sourcepath);
+                using (StreamWriter sw = File.AppendText(sourcepath))
+                    foreach (string line in lines)
+                    {
+                        string[] numbers = line.Split(",");
+                        int id = int.Parse(numbers[0]);
+                        string code = numbers[1];
+                        Artwork artwork = new Artwork(id, code, author);
+                        Artworks.Add(artwork);
+                    }
+            }
+
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred!");
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
 
     }
-}
+    }
+

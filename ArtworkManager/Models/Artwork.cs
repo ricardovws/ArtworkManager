@@ -19,6 +19,7 @@ namespace ArtworkManager.Models
 
         }
 
+        
         public Artwork(int id, string code, Author owner)
         {
             Id = id;
