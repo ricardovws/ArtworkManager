@@ -34,7 +34,8 @@ namespace ArtworkManager.Models
             
             try
             {
-                string sourcepath = @"c:\teste1\RS85424.csv";
+                string adduser = author.User;
+                string sourcepath = @"c:\teste1\"+ adduser + ".csv";
                 string[] lines = File.ReadAllLines(sourcepath);
                 using (StreamWriter sw = File.AppendText(sourcepath))
                     foreach (string line in lines)

@@ -29,7 +29,8 @@ namespace ArtworkManager.Data
 
             Author a1 = new Author(1, "Ricardo dos Santos", "RS85424", "SantosRicardoV@johndeere.com", t1);
             a1.LoadCodePack(a1);
-            Author a2 = new Author(2, "Lucas Rech", "LS000000000", "RechLucas@johndeere.com", t1);
+            Author a2 = new Author(2, "Lucas Rech", "LS0", "RechLucas@johndeere.com", t1);
+            a2.LoadCodePack(a2);
             Author a3 = new Author(3, "Jujubeira", "0000", "jaeras", t1);
 
 
