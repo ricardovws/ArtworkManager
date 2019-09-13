@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ArtworkManager.Models;
 using ArtworkManager.Data;
+using ArtworkManager.Services;
 
 namespace ArtworkManager
 {
@@ -42,6 +43,7 @@ namespace ArtworkManager
 builder.MigrationsAssembly("ArtworkManager")));
 
             services.AddScoped<SeedingService>();
+            services.AddScoped<AuthorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

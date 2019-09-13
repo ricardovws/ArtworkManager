@@ -40,12 +40,17 @@ namespace ArtworkManager.Models
                 using (StreamWriter sw = File.AppendText(sourcepath))
                     foreach (string line in lines)
                     {
-                        string[] numbers = line.Split(",");
-                        int id = int.Parse(numbers[0]);
-                        string code = numbers[1];
+                        string numbers = line;
+                        int id = int.Parse(numbers);
+                        string code = "NW"+ numbers;
                         Artwork artwork = new Artwork(id, code, author);
                         Artworks.Add(artwork);
                     }
+               
+
+
+
+
             }
 
             catch (IOException e)
@@ -54,6 +59,8 @@ namespace ArtworkManager.Models
                 Console.WriteLine(e.Message);
             }
         }
+
+        
 
 
 
