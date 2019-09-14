@@ -47,10 +47,6 @@ namespace ArtworkManager.Models
                         Artworks.Add(artwork);
                     }
                
-
-
-
-
             }
 
             catch (IOException e)

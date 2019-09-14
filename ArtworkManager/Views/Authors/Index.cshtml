@@ -40,6 +40,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Team)
             </td>
+            <td>
+                <a asp-action="GetCode" asp-route-id="@item.Id">Get a code!!!</a>
+
+
+            </td>
         </tr>
         }
     </tbody>
