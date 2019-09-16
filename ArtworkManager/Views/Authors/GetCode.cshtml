@@ -7,6 +7,24 @@
 
 <h3>Below, you can see your next free code to use:</h3>
 
+<script type="text/javascript">
+
+    function CopyToClipboard() {
+
+        var Copiedtxt = document.selection.createRange();
+        Copiedtxt.execCommand("Copy");
+    }
+
+    function PasteFromClipboard() {
+        document.getElementById('txtArea').focus();
+        var PastedText = document.getElementById('txtArea').createRange();
+        PastedText.execCommand("Paste");
+    }
+
+
+
+</script>
+
 <div>
     <h4>Artwork</h4>
     <hr />
@@ -19,9 +37,16 @@
         </dd>
     </d1>
     <form asp-action="GetCode">
-        <input type="hidden" asp-for="Id"/>
-        <input type="submit" value="Copy" class="btn btn-danger" />
+        <input type="hidden" asp-for="Id" />
+
+
+        <input type="submit" value="Copy" class="btn btn-danger" />   ////// ignorar!!!
+
+
+        <input type="submit" value="Copy" onclick="PasteFromClipboard();" />
+
+
         <a asp-action="Index">Back to List</a>
-</form>
+    </form>
 </div>
 
