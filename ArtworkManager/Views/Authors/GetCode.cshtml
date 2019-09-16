@@ -7,43 +7,42 @@
 
 <h3>Below, you can see your next free code to use:</h3>
 
-<script type="text/javascript">
-
-    function CopyToClipboard() {
-
-        var Copiedtxt = document.selection.createRange();
-        Copiedtxt.execCommand("Copy");
-    }
-
-    function PasteFromClipboard() {
-        document.getElementById('txtArea').focus();
-        var PastedText = document.getElementById('txtArea').createRange();
-        PastedText.execCommand("Paste");
-    }
-
-
-
-</script>
-
 <div>
     <h4>Artwork</h4>
     <hr />
     <d1 class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.Code)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Code)
         </dd>
+        <textarea id="text" cols="60" rows="13">@Html.DisplayFor(model => model.Code)</textarea>
+        <br>
+       
+        
+
+
     </d1>
     <form asp-action="GetCode">
         <input type="hidden" asp-for="Id" />
 
 
-        <input type="submit" value="Copy" class="btn btn-danger" />   ////// ignorar!!!
 
+        <button onclick="copy()">Copy</button>
+        <script type="text/javascript">
+            function copy() {
+                var text = document.getElementById('text');
+                var range = document.createRange();
 
-        <input type="submit" value="Copy" onclick="PasteFromClipboard();" />
+                range.selectNode(text);
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+
+            }
+        </script>
+
 
 
         <a asp-action="Index">Back to List</a>
