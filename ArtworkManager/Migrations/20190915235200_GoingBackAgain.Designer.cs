@@ -3,14 +3,16 @@ using System;
 using ArtworkManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ArtworkManager.Migrations
 {
     [DbContext(typeof(ArtworkManagerContext))]
-    partial class ArtworkManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20190915235200_GoingBackAgain")]
+    partial class GoingBackAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,13 +28,13 @@ namespace ArtworkManager.Migrations
 
                     b.Property<string>("Code");
 
-                    b.Property<int>("OwnerID");
+                    b.Property<int?>("OwnerId");
 
                     b.Property<int>("Status");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerID");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Artwork");
                 });
@@ -73,8 +75,7 @@ namespace ArtworkManager.Migrations
                 {
                     b.HasOne("ArtworkManager.Models.Author", "Owner")
                         .WithMany("Artworks")
-                        .HasForeignKey("OwnerID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OwnerId");
                 });
 
             modelBuilder.Entity("ArtworkManager.Models.Author", b =>

@@ -11,6 +11,7 @@ namespace ArtworkManager.Models
         public int Id { get; set; }
         public string Code { get; set; }
         public Author Owner { get; set; }
+        public int OwnerID { get; set; }
         public ArtworkStatus Status { get; set; }
         public DateTime BirthDate { get; set; }
 
@@ -20,12 +21,14 @@ namespace ArtworkManager.Models
         }
 
         
-        public Artwork(int id, string code, Author owner)
+        public Artwork(int id, string code, Author owner, int ownerID)
         {
             Id = id;
             Code = code;
             Owner = owner;
             Status = ArtworkStatus.FreeToUse;
+            OwnerID = ownerID;
+            
         }
     }
 }

@@ -20,6 +20,11 @@ namespace ArtworkManager.Services
             return _context.Author.ToList();
         }
 
+        public List<Artwork> ShowAllArtworks(Author author)
+        {
+            return _context.Artwork.Where(obj => obj.Owner == author).ToList();
+        }
+
         public Author FindAuthorById (int id)
         {
             return _context.Author.First(obj => obj.Id == id);
@@ -35,11 +40,14 @@ namespace ArtworkManager.Services
         public void UseCode (Author owner)
         {
             var objj = _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
+            
             var obj1 = objj;
+            
             _context.Artwork.Remove(objj);
             _context.SaveChanges();
             obj1.Status = Models.Enums.ArtworkStatus.Used;
             obj1.BirthDate = DateTime.Now;
+            
             
             _context.Artwork.Add(obj1);
             _context.SaveChanges();

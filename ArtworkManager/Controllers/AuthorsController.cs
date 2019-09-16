@@ -34,7 +34,14 @@ namespace ArtworkManager.Controllers
         public IActionResult GetCode(Author author)
         {
             _authorService.UseCode(author);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GetCode));
+        }
+
+        public IActionResult ShowAllCodes(Author author)
+        {
+            var list = _authorService.ShowAllArtworks(author);
+            return View(list);
+
         }
     }
 }

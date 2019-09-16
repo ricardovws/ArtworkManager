@@ -43,7 +43,7 @@ namespace ArtworkManager.Models
                         string numbers = line;
                         int id = int.Parse(numbers);
                         string code = "NW"+ numbers;
-                        Artwork artwork = new Artwork(id, code, author);
+                        Artwork artwork = new Artwork(id, code, author, Id);
                         Artworks.Add(artwork);
                     }
                
