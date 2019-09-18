@@ -12,6 +12,7 @@ namespace ArtworkManager.Models
         public string Code { get; set; }
         public Author Owner { get; set; }
         public int OwnerID { get; set; }
+        public string PublicationCode { get; set; }
         public ArtworkStatus Status { get; set; }
         public DateTime BirthDate { get; set; }
 
@@ -26,6 +27,7 @@ namespace ArtworkManager.Models
             Id = id;
             Code = code;
             Owner = owner;
+            PublicationCode = "Not Specified";
             Status = ArtworkStatus.FreeToUse;
             OwnerID = ownerID;
             

@@ -19,9 +19,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Team)
-            </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -37,11 +35,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Team)
-            </td>
+            
             <td>
                 <a asp-action="GetCode" asp-route-id="@item.Id">Get a code!!!</a>
+                <a asp-action="AddPublicationCode" asp-route-id="@item.Id">Add a publication code!</a>
                 <a asp-action="ShowAllCodes" asp-route-id="@item.Id">See list of codes</a>
 
 

@@ -1,0 +1,39 @@
+﻿
+@model ArtworkManager.Models.Artwork
+@{
+    ViewData["Title"] = "AddPublicationCode";
+}
+
+<h2>Add Publication Code</h2>
+
+<h3>Insert the publication code, please: </h3>
+
+<hr />
+<div class="row">
+
+    <div class="col-md-4">
+<form asp-action="AddPublicationCode">
+
+    <div-class="form-group">
+      
+        <label asp-for="PublicationCode" class="control-label"></label>
+        <input asp-for="PublicationCode" class="form-control"/>
+
+    </div-class>
+    <div class="form-group">
+        <input type="submit" value="AddPublicationCode" class="btn btn-default"/>
+    </div>
+
+
+</form>
+
+
+    </div>
+
+</div>
+
+
+
+
+<a asp-action="Index">Back to List</a>
+

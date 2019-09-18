@@ -23,6 +23,23 @@ namespace ArtworkManager.Controllers
             return View(list);
         }
 
+         public IActionResult AddPublicationCode()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddPublicationCode(string publicationcode, int id)
+        {
+            var author = _authorService.FindAuthorById(id);
+            _authorService.AddPublicationCode(author, publicationcode);
+           return RedirectToAction(nameof(GetCode), new { id = id });
+        }
+        // Esse método não consegue receber o author!!!
+
+
+
         public IActionResult GetCode(int id)
         {
             var author = _authorService.FindAuthorById(id);

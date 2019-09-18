@@ -5,24 +5,17 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<h3>Below, you can see your next free code to use:</h3>
+<h3>Below you can see your next free code to use:</h3>
 
 <div>
-    <h4>Artwork</h4>
     <hr />
     <d1 class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Code)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Code)
-        </dd>
-        <textarea id="text" cols="60" rows="13">@Html.DisplayFor(model => model.Code)</textarea>
-        <br>
-       
+                
+        <textarea id="text" >@Html.DisplayFor(model => model.Code)</textarea>
         
-
+        <br>
+    
+      
 
     </d1>
     <form asp-action="GetCode">
