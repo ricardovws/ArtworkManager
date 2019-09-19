@@ -34,9 +34,9 @@ namespace ArtworkManager.Controllers
         {
             var author = _authorService.FindAuthorById(id);
             _authorService.AddPublicationCode(author, publicationcode);
-           return RedirectToAction(nameof(GetCode), new { id = id });
+           return RedirectToAction(nameof(GetCode2), new { id = id});
         }
-        // Esse método não consegue receber o author!!!
+        
 
 
 
@@ -53,6 +53,29 @@ namespace ArtworkManager.Controllers
             _authorService.UseCode(author);
             return RedirectToAction(nameof(GetCode));
         }
+
+
+
+
+        public IActionResult GetCode2(int id)
+        {
+            var author = _authorService.FindAuthorById(id);
+            var obj = _authorService.GetACode(author);
+            return View(obj);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GetCode2(int id, Author author)
+        {
+            _authorService.UseCode2(author);
+            return RedirectToAction(nameof(GetCode), new { id=id});
+        }
+
+
+
+
+
+
 
         public IActionResult ShowAllCodes(Author author)
         {

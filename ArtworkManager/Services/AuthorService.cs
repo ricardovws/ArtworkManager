@@ -59,6 +59,8 @@ namespace ArtworkManager.Services
 
         }
 
+        //This method below use a code from a existing publication code! (using for reference the last publication code used...)
+
         public void UseCode (Author owner)
         {
             var objj = _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
@@ -69,9 +71,30 @@ namespace ArtworkManager.Services
             _context.SaveChanges();
             obj1.Status = Models.Enums.ArtworkStatus.Used;
             obj1.BirthDate = DateTime.Now;
+            obj1.PublicationCode = _context.Artwork.Last(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.Used).PublicationCode;
+                                                       
             
+            _context.Artwork.Add(obj1);
+            _context.SaveChanges();
+        }
+
+
+        //This method below use a code from a existing publication code! (using for reference a new publication code...)
+        public void UseCode2(Author owner)
+        {
+            var objj = _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
+
+            var obj1 = objj;
+
+            _context.Artwork.Remove(objj);
+            _context.SaveChanges();
             
+            obj1.Status = Models.Enums.ArtworkStatus.Used;
+            obj1.BirthDate = DateTime.Now;
             
+
+
+
             _context.Artwork.Add(obj1);
             _context.SaveChanges();
         }

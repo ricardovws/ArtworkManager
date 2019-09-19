@@ -1,0 +1,44 @@
+﻿@model ArtworkManager.Models.Artwork
+@{
+    ViewData["Title"] = "GetCode2";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Below you can see your next free code to use:</h3>
+
+<div>
+    <hr />
+    <d1 class="dl-horizontal">
+
+        <textarea id="text">@Html.DisplayFor(model => model.Code)</textarea>
+
+        <br>
+
+
+
+    </d1>
+    <form asp-action="GetCode2">
+        <input type="hidden" asp-for="Id" />
+
+
+
+        <button onclick="copy()">Copy</button>
+        <script type="text/javascript">
+            function copy() {
+                var text = document.getElementById('text');
+                var range = document.createRange();
+
+                range.selectNode(text);
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+
+            }
+        </script>
+
+
+
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+
