@@ -1,4 +1,5 @@
 ﻿using ArtworkManager.Models;
+using ArtworkManager.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace ArtworkManager.Services
 
         }
 
-        //This method below use a code from a existing publication code! (using for reference the last publication code used...)
+        //This method below uses a code from a existing publication code! (using for reference the last publication code used...)
 
         public void UseCode (Author owner)
         {
@@ -79,7 +80,7 @@ namespace ArtworkManager.Services
         }
 
 
-        //This method below use a code from a existing publication code! (using for reference a new publication code...)
+        //This method below uses as reference a new publication code...
         public void UseCode2(Author owner)
         {
             var objj = _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
@@ -97,6 +98,30 @@ namespace ArtworkManager.Services
 
             _context.Artwork.Add(obj1);
             _context.SaveChanges();
+        }
+
+        public void Update(Artwork obj)
+        {
+            if (!_context.Artwork.Any(x=> x.Id == obj.Id && x.Status == Models.Enums.ArtworkStatus.Used))
+            {
+                throw new NotFoundException("You cannot update information from a non-used artwork.");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+     
+        }
+
+        public Artwork FindArtworkById(int id)
+        {
+            return _context.Artwork.First(obj => obj.Id == id);
+
         }
     }
 }

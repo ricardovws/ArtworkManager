@@ -71,17 +71,20 @@ namespace ArtworkManager.Controllers
             return RedirectToAction(nameof(GetCode), new { id=id});
         }
 
-
-
-
-
-
-
         public IActionResult ShowAllCodes(Author author)
         {
             var list = _authorService.ShowAllArtworks(author);
             return View(list);
 
         }
+
+        public IActionResult Edit(int id)
+        {
+            var obj = _authorService.FindArtworkById(id);
+            return View(obj);
+        }
+
+
+
     }
 }
