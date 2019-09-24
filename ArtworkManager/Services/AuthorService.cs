@@ -100,7 +100,7 @@ namespace ArtworkManager.Services
             _context.SaveChanges();
         }
 
-        public void Update(Artwork obj)
+        public void Update(int id, Artwork obj)
         {
             if (!_context.Artwork.Any(x=> x.Id == obj.Id && x.Status == Models.Enums.ArtworkStatus.Used))
             {

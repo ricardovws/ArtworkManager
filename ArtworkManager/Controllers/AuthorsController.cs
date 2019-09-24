@@ -28,6 +28,14 @@ namespace ArtworkManager.Controllers
             return View();
         }
 
+        public IActionResult AskAboutCode()
+        {
+            return View();
+        }
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddPublicationCode(string publicationcode, int id)
@@ -82,6 +90,18 @@ namespace ArtworkManager.Controllers
         {
             var obj = _authorService.FindArtworkById(id);
             return View(obj);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit (int id, Artwork artwork)
+        {
+            var obj = _authorService.FindArtworkById(id);
+            obj.PublicationCode = artwork.PublicationCode;
+            _authorService.Update(id, obj);
+            return RedirectToAction(nameof(ShowAllCodes), new { id=obj.OwnerID});
         }
 
 

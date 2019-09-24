@@ -37,10 +37,16 @@
             </td>
             
             <td>
+                
+                
                 <a asp-action="AddPublicationCode" asp-route-id="@item.Id">Get a code ! (add a new publication code!)</a>
 
+                <br />
+
                 <a asp-action="GetCode" asp-route-id="@item.Id">Get a code! (from the last code publication used!)</a>
-                
+
+                <br />
+
                 <a asp-action="ShowAllCodes" asp-route-id="@item.Id">See list of codes</a>
 
 

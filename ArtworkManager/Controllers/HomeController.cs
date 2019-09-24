@@ -13,7 +13,7 @@ namespace ArtworkManager.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index","Authors");
         }
 
         public IActionResult About()
