@@ -1,5 +1,6 @@
 ﻿using ArtworkManager.Models;
 using ArtworkManager.Services.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,6 @@ namespace ArtworkManager.Services
             return _context.Author.ToList();
         }
 
-        
 
         public List<Artwork> ShowAllArtworks(Author author)
         {

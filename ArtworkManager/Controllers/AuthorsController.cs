@@ -17,6 +17,7 @@ namespace ArtworkManager.Controllers
             _authorService = authorService;
         }
 
+        
         public IActionResult Index()
         {
             var list = _authorService.ShowAllAuthors();
