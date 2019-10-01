@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using ArtworkManager.Models;
 using ArtworkManager.Services;
 using Microsoft.AspNetCore.Mvc;
+using PagedList.Mvc;
+using PagedList;
+using ArtworkManager.Models.ViewModels;
 
 namespace ArtworkManager.Controllers
 {
@@ -82,8 +85,77 @@ namespace ArtworkManager.Controllers
 
         public IActionResult ShowAllCodes(Author author)
         {
-            var list = _authorService.ShowAllArtworks(author);
+            var list = new List<Artwork>(); // _authorService.ShowAllArtworks(author);
             return View(list);
+        }
+
+        public IActionResult LoadData(int id)
+        {
+            try
+            {
+                var author = _authorService.FindAuthorById(id);
+
+                var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+
+                // Skip number of Rows count  
+                var start = Request.Form["start"].FirstOrDefault();
+
+                // Paging Length 10,20  
+                var length = Request.Form["length"].FirstOrDefault();
+
+                // Sort Column Name  
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+
+                // Sort Column Direction (asc, desc)  
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+
+                // Search Value from (Search box)  
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+                //Paging Size (10, 20, 50,100)  
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+
+                int recordsTotal = 0;
+
+                // getting all Customer data  
+                if (sortColumn=="id")
+                {
+                    sortColumn = "status";
+                    sortColumnDirection = "desc";
+                }
+                var list = _authorService.ShowAllArtworks(author,sortColumn,sortColumnDirection,searchValue,skip,pageSize, out recordsTotal);
+                var listArtworks = new List<ShowAllCodesViewModel>();
+                foreach (var item in list)
+                {
+                    var itemLista = new ShowAllCodesViewModel();
+                    itemLista.Id = item.Id;
+                    itemLista.Code = item.Code;
+                    itemLista.PublicationCode = item.PublicationCode;
+                    if (item.BirthDate != DateTime.MinValue)
+                    {
+                        itemLista.BirthDate = item.BirthDate.ToString("dd/MM/yyyy HH:mm:ss");
+                    }
+                    if (item.Status == Models.Enums.ArtworkStatus.FreeToUse)
+                    {
+                        itemLista.Status = "Free to use";
+                    }
+                    else
+                    {
+                        itemLista.Status = "Used";
+                    }
+                    listArtworks.Add(itemLista);
+                }
+                //Paging   
+                //Returning Json Data  
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = listArtworks });
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
 

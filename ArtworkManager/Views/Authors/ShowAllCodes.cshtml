@@ -6,53 +6,74 @@
 <h2>@ViewData["Title"]</h2>
 
 
-
-<table class="table table-striped table-hover">
+<form asp-action="ShowAllCodes">
+    <a asp-action="Index">Back to List</a>
+</form>
+<table id="publicationtable" class="table table-striped table-hover datatable-responsive">
     <thead>
-        <form asp-action="ShowAllCodes">
-
-            <a asp-action="Index">Back to List</a>
-        </form>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Code)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Code
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BirthDate)
+                Status
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PublicationCode)
+                BirthDate
+            </th>
+            <th>
+                PublicationCode
+            </th>
+            <th>
+                Edit
             </th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublicationCode)
-            </td>
-            <td>
+</table>
 
-                <form asp-action="Edit">
+<script>
+    $(function () {
+        var url = window.location.href;
+        var split = url.split("ShowAllCodes/");
+        var currentURL = split[1];
+        console.log(currentURL);
+        $('#publicationtable').DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": false, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "ajax": {
+                "url": "/Authors/LoadData",
+                "type": "POST",
+                "datatype": "json",
+                "data": { "id": currentURL }
+            },
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                },
+                    {
+                        "targets": [0, 3, 4, 5],
+                        "orderable": false
+                }],
+            "columns": [
+                { "data": "id", "name": "id", "autoWidth": true },
+                { "data": "code", "name": "code", "autoWidth": true },
+                { "data": "status", "name": "status", "autoWidth": true },
+                { "data": "birthDate", "name": "birthDate", "autoWidth": true },
+                { "data": "publicationCode", "name": "publicationCode", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Authors/Edit/' + full.id + '">Edit</a>'; }
+                }
+            ]
 
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit publication code</a>
-                </form>
+        });
+    })</script>
 
-            </td>
-        </tr>
-        }
-    </tbody></table>
+
 

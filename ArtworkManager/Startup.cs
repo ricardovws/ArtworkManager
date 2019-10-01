@@ -36,7 +36,9 @@ namespace ArtworkManager
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(
+            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        );
 
             services.AddDbContext<ArtworkManagerContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("ArtworkManagerContext"), builder =>

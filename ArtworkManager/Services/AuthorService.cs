@@ -24,9 +24,36 @@ namespace ArtworkManager.Services
         }
 
 
-        public List<Artwork> ShowAllArtworks(Author author)
+        public List<Artwork> ShowAllArtworks(Author author, string sortColumn, string sortColumnDirection, string searchValue, int skip, int pageSize, out int recordsTotal)
         {
-            return _context.Artwork.Where(obj => obj.Owner == author).Include(obj1 => obj1.Owner).ToList();
+
+            var artwork = _context.Artwork.Where(obj => obj.Owner == author);
+            recordsTotal = artwork.Count();
+            //Sorting  
+            if (sortColumn== "code")
+            {
+                if (sortColumnDirection.ToUpper() == "ASC")
+                {
+                    artwork = artwork.OrderBy(x => x.Code);
+                }
+                else
+                {
+                    artwork = artwork.OrderByDescending(x => x.Code);
+                }
+            }
+            else
+            {
+                if (sortColumnDirection.ToUpper() == "ASC")
+                {
+                    artwork = artwork.OrderBy(x => x.Status).ThenBy(x => x.Code);
+                }
+                else
+                {
+                    artwork = artwork.OrderByDescending(x => x.Status).ThenBy(x => x.Code);
+                }
+            }
+            var data = artwork.Skip(skip).Take(pageSize).ToList();
+            return data;
         }
 
         public void AddPublicationCode(Author owner, string publicationcode)
@@ -72,9 +99,15 @@ namespace ArtworkManager.Services
             _context.SaveChanges();
             obj1.Status = Models.Enums.ArtworkStatus.Used;
             obj1.BirthDate = DateTime.Now;
+           try { 
             obj1.PublicationCode = _context.Artwork.Last(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.Used).PublicationCode;
-                                                       
-            
+            }
+            catch
+            {
+            obj1.PublicationCode = _context.Artwork.Last(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse).PublicationCode;
+            }
+
+
             _context.Artwork.Add(obj1);
             _context.SaveChanges();
         }
