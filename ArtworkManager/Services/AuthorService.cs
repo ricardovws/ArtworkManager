@@ -23,6 +23,11 @@ namespace ArtworkManager.Services
             return _context.Author.ToList();
         }
 
+        public List<Author> ShowOnlyAAuthor(Author author)
+        {
+            return _context.Author.Where(obj => obj.Id == author.Id).ToList();
+        }
+
 
         public List<Artwork> ShowAllArtworks(Author author, string sortColumn, string sortColumnDirection, string searchValue, int skip, int pageSize, out int recordsTotal)
         {
@@ -79,6 +84,18 @@ namespace ArtworkManager.Services
         {
             return _context.Author.First(obj => obj.Id == id);
             
+        }
+
+        public User FindUserById(int id)
+        {
+            return _context.User.First(obj => obj.Id == id);
+
+        }
+
+        public Author FindAuthorByUser(User user)
+        {
+            return _context.Author.First(obj => obj.Id == user.OwnerId);
+
         }
 
         public Artwork GetACode (Author owner)
@@ -156,5 +173,7 @@ namespace ArtworkManager.Services
             return _context.Artwork.First(obj => obj.Id == id);
 
         }
+
+
     }
 }

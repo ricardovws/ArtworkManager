@@ -13,6 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using ArtworkManager.Models;
 using ArtworkManager.Data;
 using ArtworkManager.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ArtworkManager
 {
@@ -28,24 +31,42 @@ namespace ArtworkManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(
+            services.AddMvc(
+                    config => {
+                        var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                        config.Filters.Add(new AuthorizeFilter(policy));
+                    }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(
             options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromDays(5);
+                    options.LoginPath = "/Users/Login";
+                    options.LogoutPath = "/Users/Logout";
+                    options.SlidingExpiration = true;
+                });
+
             services.AddDbContext<ArtworkManagerContext>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("ArtworkManagerContext"), builder =>
-builder.MigrationsAssembly("ArtworkManager")));
+                    options.UseMySql(Configuration.GetConnectionString("ArtworkManagerContext"), 
+                    builder => builder.MigrationsAssembly("ArtworkManager")));
 
             services.AddScoped<SeedingService>();
             services.AddScoped<AuthorService>();
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +85,8 @@ builder.MigrationsAssembly("ArtworkManager")));
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            app.UseAuthentication();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

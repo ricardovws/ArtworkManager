@@ -14,20 +14,35 @@ namespace ArtworkManager.Controllers
     public class AuthorsController : Controller
     {
         private readonly AuthorService _authorService;
+        private readonly UserService _userService;
 
-        public AuthorsController(AuthorService authorService)
+        public AuthorsController(AuthorService authorService, UserService userService)
         {
             _authorService = authorService;
+            _userService = userService;
         }
 
-        
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = await _userService.FindByIdAsync(idUser);
+            var owner = _authorService.FindAuthorByUser(user);
+
+
+
+            if (user.Admin == false)
+            {
+                var list2 = _authorService.ShowOnlyAAuthor(owner);
+
+                return View(list2);
+            }
+
             var list = _authorService.ShowAllAuthors();
             return View(list);
         }
 
-         public IActionResult AddPublicationCode()
+        public IActionResult AddPublicationCode()
         {
             return View();
         }
@@ -46,9 +61,9 @@ namespace ArtworkManager.Controllers
         {
             var author = _authorService.FindAuthorById(id);
             _authorService.AddPublicationCode(author, publicationcode);
-           return RedirectToAction(nameof(GetCode2), new { id = id});
+            return RedirectToAction(nameof(GetCode2), new { id = id });
         }
-        
+
 
 
 
@@ -80,7 +95,7 @@ namespace ArtworkManager.Controllers
         public IActionResult GetCode2(int id, Author author)
         {
             _authorService.UseCode2(author);
-            return RedirectToAction(nameof(GetCode), new { id=id});
+            return RedirectToAction(nameof(GetCode), new { id = id });
         }
 
         public IActionResult ShowAllCodes(Author author)
@@ -120,12 +135,12 @@ namespace ArtworkManager.Controllers
                 int recordsTotal = 0;
 
                 // getting all Customer data  
-                if (sortColumn=="id")
+                if (sortColumn == "id")
                 {
                     sortColumn = "status";
                     sortColumnDirection = "desc";
                 }
-                var list = _authorService.ShowAllArtworks(author,sortColumn,sortColumnDirection,searchValue,skip,pageSize, out recordsTotal);
+                var list = _authorService.ShowAllArtworks(author, sortColumn, sortColumnDirection, searchValue, skip, pageSize, out recordsTotal);
                 var listArtworks = new List<ShowAllCodesViewModel>();
                 foreach (var item in list)
                 {
@@ -169,12 +184,12 @@ namespace ArtworkManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit (int id, Artwork artwork)
+        public IActionResult Edit(int id, Artwork artwork)
         {
             var obj = _authorService.FindArtworkById(id);
             obj.PublicationCode = artwork.PublicationCode;
             _authorService.Update(id, obj);
-            return RedirectToAction(nameof(ShowAllCodes), new { id=obj.OwnerID});
+            return RedirectToAction(nameof(ShowAllCodes), new { id = obj.OwnerID });
         }
 
 

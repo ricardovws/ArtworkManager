@@ -3,14 +3,16 @@ using System;
 using ArtworkManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ArtworkManager.Migrations
 {
     [DbContext(typeof(ArtworkManagerContext))]
-    partial class ArtworkManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20191009195503_LetsSeeAgain3")]
+    partial class LetsSeeAgain3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,13 +84,9 @@ namespace ArtworkManager.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("OwnerId");
-
                     b.Property<string>("Password");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("User");
                 });
@@ -106,14 +104,6 @@ namespace ArtworkManager.Migrations
                     b.HasOne("ArtworkManager.Models.Team", "Team")
                         .WithMany("Authors")
                         .HasForeignKey("TeamId");
-                });
-
-            modelBuilder.Entity("ArtworkManager.Models.User", b =>
-                {
-                    b.HasOne("ArtworkManager.Models.Author", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
