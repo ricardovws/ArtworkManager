@@ -3,14 +3,16 @@ using System;
 using ArtworkManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ArtworkManager.Migrations
 {
     [DbContext(typeof(ArtworkManagerContext))]
-    partial class ArtworkManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20191011035101_LetsSeeAgain9")]
+    partial class LetsSeeAgain9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,7 +76,7 @@ namespace ArtworkManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Master");
+                    b.ToTable("MasterOfAllArtworks");
                 });
 
             modelBuilder.Entity("ArtworkManager.Models.Team", b =>

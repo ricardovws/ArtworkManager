@@ -3,14 +3,16 @@ using System;
 using ArtworkManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ArtworkManager.Migrations
 {
     [DbContext(typeof(ArtworkManagerContext))]
-    partial class ArtworkManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20191012210656_LetsSeeAgain10")]
+    partial class LetsSeeAgain10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

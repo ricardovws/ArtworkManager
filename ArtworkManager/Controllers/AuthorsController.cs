@@ -27,6 +27,10 @@ namespace ArtworkManager.Controllers
         {
             var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
             var user = await _userService.FindByIdAsync(idUser);
+            if (user == null || user.Id == 0)
+            {
+                RedirectToAction("Login", "Users");
+            }
             var owner = _authorService.FindAuthorByUser(user);
 
 

@@ -21,7 +21,13 @@ namespace ArtworkManager.Models
 
         }
 
-        
+        public Artwork(int id, string code)
+        {
+            Id = id;
+            Code = code;
+            Status = ArtworkStatus.FreeToUse;
+        }
+
         public Artwork(int id, string code, Author owner, int ownerID)
         {
             Id = id;

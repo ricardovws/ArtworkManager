@@ -14,53 +14,40 @@ namespace ArtworkManager.Models
         public string Email { get; set; }
         public Team Team { get; set; }
         public ICollection<Artwork> Artworks { get; set; } = new List<Artwork>();
-        
+        public MasterOfAllArtworks Master { get; set; }
+
         public Author()
         {
-
         }
 
-        public Author(int id, string name, string user, string email, Team team)
+        public Author(int id, string name, string user, string email, Team team, MasterOfAllArtworks master)
         {
             Id = id;
             Name = name;
             User = user;
             Email = email;
             Team = team;
+            Master = master;
         }
 
-        
-        public void LoadCodePack(Author author)
+        public void LoadCodePack(Author author, MasterOfAllArtworks master)
         {
-            
             try
             {
-                string adduser = author.User;
-                string sourcepath = @"c:\teste1\"+ adduser + ".csv";
-                string[] lines = File.ReadAllLines(sourcepath);
-                using (StreamWriter sw = File.AppendText(sourcepath))
-                    foreach (string line in lines)
-                    {
-                        string numbers = line;
-                        int id = int.Parse(numbers);
-                        string code = "NW"+ numbers;
-                        Artwork artwork = new Artwork(id, code, author, Id);
-                        Artworks.Add(artwork);
-                    }
-               
+                for (int i = 0; i < 25; i++)
+                {
+                    var artwork = master.ALotOfArtworks.First(obj => obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
+                    artwork.OwnerID = author.Id;
+                    Artworks.Add(artwork);
+                    master.ALotOfArtworks.Remove(artwork);
+                }
             }
-
             catch (IOException e)
             {
                 Console.WriteLine("An error occurred!");
                 Console.WriteLine(e.Message);
             }
         }
-
-        
-
-
-
     }
-    }
+}
 
