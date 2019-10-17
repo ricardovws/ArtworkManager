@@ -14,32 +14,37 @@ namespace ArtworkManager.Models
         public string Email { get; set; }
         public Team Team { get; set; }
         public ICollection<Artwork> Artworks { get; set; } = new List<Artwork>();
-        public MasterOfAllArtworks Master { get; set; }
+        
 
         public Author()
         {
         }
 
-        public Author(int id, string name, string user, string email, Team team, MasterOfAllArtworks master)
+        public Author(int id, string name, string user, string email, Team team)
         {
             Id = id;
             Name = name;
             User = user;
             Email = email;
             Team = team;
-            Master = master;
+            
         }
 
-        public void LoadCodePack(Author author, MasterOfAllArtworks master)
+        public void LoadCodePack(List<string> listOfArtworks)
         {
             try
             {
-                for (int i = 0; i < 25; i++)
+                for (int i = 0; i < 2500; i++)
                 {
-                    var artwork = master.ALotOfArtworks.First(obj => obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
-                    artwork.OwnerID = author.Id;
-                    Artworks.Add(artwork);
-                    master.ALotOfArtworks.Remove(artwork);
+                    var artworkCode = listOfArtworks.First();
+                    listOfArtworks.RemoveAt(0);
+                    string[] artwork = artworkCode.Split(',');
+                    int artworkId = int.Parse(artwork[0]);
+                    string artworkNumber = artwork[1];
+                    Artwork artworkx = new Artwork(artworkId, artworkNumber);
+                    artworkx.OwnerID = Id;
+                    Artworks.Add(artworkx);
+
                 }
             }
             catch (IOException e)

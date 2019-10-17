@@ -15,6 +15,10 @@ namespace ArtworkManager.Models
         public Author Owner { get; set; }
         public int OwnerId { get; set; }
         public bool Admin { get; set; }
+
+    
     }
+
+ 
     
 }

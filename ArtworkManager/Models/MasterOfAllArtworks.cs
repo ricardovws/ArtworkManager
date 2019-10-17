@@ -21,7 +21,7 @@ namespace ArtworkManager.Models
         public void CreateAllArtworks ()
         {
             string x = "BM";
-            int n = 100;
+            int n = 1000;
             int jujubinha = 0;
             string number = jujubinha.ToString();
             
@@ -36,9 +36,15 @@ namespace ArtworkManager.Models
                     code = codex.ToString();
                 }
                 string codexx = x + code;
-                Artwork artwork = new Artwork(i, codexx);                
+                Artwork artwork = new Artwork(y,codexx);
                 ALotOfArtworks.Add(artwork);
             }
+        }
+
+        public int ArtworkCodeId (string code)
+        {
+            int codey = int.Parse(code);
+            return codey;
         }
     }
 }

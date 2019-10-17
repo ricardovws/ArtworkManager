@@ -20,12 +20,12 @@ namespace ArtworkManager.Services
 
         public List<Author> ShowAllAuthors()
         {
-            return _context.Author.ToList();
+            return _context.Author.Include(obj => obj.Team).ToList();
         }
 
         public List<Author> ShowOnlyAAuthor(Author author)
         {
-            return _context.Author.Where(obj => obj.Id == author.Id).ToList();
+            return _context.Author.Include(obj => obj.Team).Where(obj => obj.Id == author.Id).ToList();
         }
 
 

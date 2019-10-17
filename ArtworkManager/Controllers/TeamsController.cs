@@ -6,21 +6,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ArtworkManager.Models;
+using ArtworkManager.Services;
 
 namespace ArtworkManager.Controllers
 {
     public class TeamsController : Controller
     {
         private readonly ArtworkManagerContext _context;
+        private readonly AuthorService _authorservice;
 
-        public TeamsController(ArtworkManagerContext context)
+        public TeamsController(ArtworkManagerContext context, AuthorService authorservice)
         {
             _context = context;
+            _authorservice = authorservice;
         }
 
         // GET: Teams
         public async Task<IActionResult> Index()
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorservice.FindUserById(idUser);
+
+            if (user.Admin == false)
+            {
+                return RedirectToAction("AccessDenied", "Users");
+            }
+
+            
             return View(await _context.Team.ToListAsync());
         }
 
