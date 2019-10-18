@@ -65,7 +65,7 @@ namespace ArtworkManager.Controllers
         {
             var author = _authorService.FindAuthorById(id);
             _authorService.AddPublicationCode(author, publicationcode);
-            return RedirectToAction(nameof(GetCode2), new { id = id });
+            return RedirectToAction(nameof(GetNewCode), new { id = id });
         }
 
 
@@ -88,7 +88,7 @@ namespace ArtworkManager.Controllers
 
 
 
-        public IActionResult GetCode2(int id)
+        public IActionResult GetNewCode(int id)
         {
             var author = _authorService.FindAuthorById(id);
             var obj = _authorService.GetACode(author);
@@ -96,9 +96,9 @@ namespace ArtworkManager.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult GetCode2(int id, Author author)
+        public IActionResult GetNewCode(int id, Author author)
         {
-            _authorService.UseCode2(author);
+            _authorService.UseNewCode(author);
             return RedirectToAction(nameof(GetCode), new { id = id });
         }
 
@@ -195,6 +195,28 @@ namespace ArtworkManager.Controllers
             _authorService.Update(id, obj);
             return RedirectToAction(nameof(ShowAllCodes), new { id = obj.OwnerID });
         }
+
+
+        public IActionResult Create()
+        {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+            if (user.Admin == false)
+            {
+                return RedirectToAction("AccessDenied", "Users");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Author author)
+        {
+            _authorService.InsertAuthor(author);
+            return RedirectToAction(nameof(Index));
+        }
+        
 
 
 

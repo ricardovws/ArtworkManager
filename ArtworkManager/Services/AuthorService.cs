@@ -131,7 +131,7 @@ namespace ArtworkManager.Services
 
 
         //This method below uses as reference a new publication code...
-        public void UseCode2(Author owner)
+        public void UseNewCode(Author owner)
         {
             var objj = _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
 
@@ -171,6 +171,13 @@ namespace ArtworkManager.Services
         public Artwork FindArtworkById(int id)
         {
             return _context.Artwork.First(obj => obj.Id == id);
+
+        }
+
+        public void InsertAuthor(Author author)
+        {
+            _context.Add(author);
+            _context.SaveChanges();
 
         }
 
