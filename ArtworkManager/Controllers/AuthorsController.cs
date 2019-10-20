@@ -15,11 +15,13 @@ namespace ArtworkManager.Controllers
     {
         private readonly AuthorService _authorService;
         private readonly UserService _userService;
+        private readonly TeamService _teamService;
 
-        public AuthorsController(AuthorService authorService, UserService userService)
+        public AuthorsController(AuthorService authorService, UserService userService, TeamService teamService)
         {
             _authorService = authorService;
             _userService = userService;
+            _teamService = teamService;
         }
 
 
@@ -205,14 +207,22 @@ namespace ArtworkManager.Controllers
             {
                 return RedirectToAction("AccessDenied", "Users");
             }
-
-            return View();
+            var teams = _teamService.FindAll();
+            var viewModel = new AuthorFormViewModel { Teams = teams };
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Author author)
+        public IActionResult Create(AuthorFormViewModel obj)
         {
+            Author author = new Author();
+            author.Id = _authorService.GetIdFree();         
+            author.Name = obj.Name;
+            author.TeamId = obj.TeamId;
+            author.User = obj.User;
+            author.Email = obj.Email;
+
             _authorService.InsertAuthor(author);
             return RedirectToAction(nameof(Index));
         }

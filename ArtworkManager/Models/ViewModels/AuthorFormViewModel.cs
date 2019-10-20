@@ -12,7 +12,8 @@ namespace ArtworkManager.Models.ViewModels
         public string Name { get; set; }
         public string User { get; set; }
         public string Email { get; set; }
-        public Team Team { get; set; }
+        public ICollection<Team> Teams { get; set; }
+        public int TeamId { get; set; }
         
     }
 }

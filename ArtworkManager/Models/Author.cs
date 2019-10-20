@@ -13,6 +13,7 @@ namespace ArtworkManager.Models
         public string User { get; set; }
         public string Email { get; set; }
         public Team Team { get; set; }
+        public int TeamId { get; set; }
         public ICollection<Artwork> Artworks { get; set; } = new List<Artwork>();
         
 

@@ -176,10 +176,21 @@ namespace ArtworkManager.Services
 
         public void InsertAuthor(Author author)
         {
+                     
             _context.Add(author);
             _context.SaveChanges();
 
         }
+
+        public int GetIdFree()
+        {
+            var authoriD = _context.Author.Last();
+            int iD = authoriD.Id;
+            int Id = iD + 1;
+            return Id;
+        }
+
+       
 
 
     }
