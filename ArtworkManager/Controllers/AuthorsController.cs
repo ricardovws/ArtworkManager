@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using PagedList.Mvc;
 using PagedList;
 using ArtworkManager.Models.ViewModels;
+using ArtworkManager.Services.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtworkManager.Controllers
 {
@@ -222,11 +224,48 @@ namespace ArtworkManager.Controllers
             author.TeamId = obj.TeamId;
             author.User = obj.User;
             author.Email = obj.Email;
-
+            _authorService.Pot(author);
             _authorService.InsertAuthor(author);
+
+
+
             return RedirectToAction(nameof(Index));
         }
-        
+
+        public IActionResult Update(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _authorService.FindAuthorById(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            List<Team> teams = _teamService.FindAll();
+            UpdateAuthorViewModel viewModel = new UpdateAuthorViewModel { Author = obj, Teams = teams };
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update (int id, UpdateAuthorViewModel obj)
+        {
+            if (id != obj.Author.Id)
+            {
+                return BadRequest();
+            }
+          
+              
+
+                _authorService.UpdateAuthor(obj.Author);
+                return RedirectToAction(nameof(Index));
+          
+        }
+
 
 
 

@@ -3,14 +3,16 @@ using System;
 using ArtworkManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ArtworkManager.Migrations
 {
     [DbContext(typeof(ArtworkManagerContext))]
-    partial class ArtworkManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20191023004917_AlmostTherept1")]
+    partial class AlmostTherept1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,12 +43,12 @@ namespace ArtworkManager.Migrations
 
             modelBuilder.Entity("ArtworkManager.Models.ArtworkCode", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ArtworkCodeId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ArtworkCodeCode");
 
-                    b.HasKey("Id");
+                    b.HasKey("ArtworkCodeId");
 
                     b.ToTable("ArtworkCode");
                 });

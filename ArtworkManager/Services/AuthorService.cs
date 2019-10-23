@@ -86,6 +86,12 @@ namespace ArtworkManager.Services
             
         }
 
+        public Author FindAuthorByIdFullObject(int id)
+        {
+            
+            return _context.Author.Include(obj => obj.Artworks).First(obj => obj.Id == id);
+        }
+
         public User FindUserById(int id)
         {
             return _context.User.First(obj => obj.Id == id);
@@ -190,6 +196,41 @@ namespace ArtworkManager.Services
             return Id;
         }
 
+        public void UpdateAuthor (Author author)
+        {
+            if (!_context.Author.Any(x=> x.Id == author.Id))
+            {
+                throw new NotFoundException("Id not found!");
+            }
+            try { 
+            _context.Update(author);
+            _context.SaveChanges();
+            }
+            catch(DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+        }
+
+        public void Pot (Author author)
+        {
+            int n = 10; // i < "n" ---> "n" represents total number of codes ownered by the author.
+
+            for (int i=0;i<n;i++)
+            {
+                var someArtworkCode = _context.ArtworkCode.First();
+                _context.ArtworkCode.Remove(someArtworkCode);
+                Artwork artwork = new Artwork();
+                artwork.Id = someArtworkCode.Id;
+                artwork.Code = someArtworkCode.ArtworkCodeCode;
+                artwork.OwnerID = author.Id;
+                author.AddCodeFromPot(artwork);
+                _context.SaveChanges();
+            }
+
+
+
+        }
        
 
 

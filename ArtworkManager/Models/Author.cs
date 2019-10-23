@@ -35,7 +35,7 @@ namespace ArtworkManager.Models
         {
             try
             {
-                for (int i = 0; i < 2500; i++)
+                for (int i = 0; i < 50; i++) // i < "n" ---> "n" represents total number of codes ownered by the author.
                 {
                     var artworkCode = listOfArtworks.First();
                     listOfArtworks.RemoveAt(0);
@@ -48,6 +48,21 @@ namespace ArtworkManager.Models
 
                 }
             }
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred!");
+                Console.WriteLine(e.Message);
+            }
+        }
+
+
+        public void AddCodeFromPot(Artwork artwork)
+        {
+            try
+            {
+                Artworks.Add(artwork);    
+            }
+            
             catch (IOException e)
             {
                 Console.WriteLine("An error occurred!");

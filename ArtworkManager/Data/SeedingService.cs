@@ -81,12 +81,12 @@ namespace ArtworkManager.Data
 
             
             string x = "BM";
-            int n = 10000; //Total of artworks!!!
+            int n = 999; //Total of artworks!!!
             List<string> listOfArtworks = new List<string>();
             int num = 0;
             string number = num.ToString();
 
-            for (int i = 0; i <= n; i++)
+            for (int i = 470; i <= n; i++) // "i" represents the first parameter code to begin the range!
             {
                 int id = i;
                 string q1code = number + i;
@@ -101,6 +101,7 @@ namespace ArtworkManager.Data
                 listOfArtworks.Add(artwork);
                 
             }
+
 
 
 
@@ -139,8 +140,22 @@ namespace ArtworkManager.Data
 
 
             _context.SaveChanges();
-            
 
+            var listOfArtworkJustCodes = listOfArtworks;
+
+            foreach (string objArtwork in listOfArtworkJustCodes)
+            {
+                var artworkWithCode = objArtwork;
+                string[] artwork = artworkWithCode.Split(',');
+                int artworkId = int.Parse(artwork[0]);
+                string artworkNumber = artwork[1];
+                ArtworkCode artworkCode = new ArtworkCode(artworkId, artworkNumber);
+                _context.ArtworkCode.Add(artworkCode);
+
+                
+            }
+
+            _context.SaveChanges();
 
         }
     }
