@@ -214,7 +214,7 @@ namespace ArtworkManager.Services
 
         public void Pot (Author author)
         {
-            int n = 10; // i < "n" ---> "n" represents total number of codes ownered by the author.
+            int n = 2000; // i < "n" ---> "n" represents total number of codes ownered by the author.
 
             for (int i=0;i<n;i++)
             {

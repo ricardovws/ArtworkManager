@@ -35,7 +35,7 @@ namespace ArtworkManager.Models
         {
             try
             {
-                for (int i = 0; i < 50; i++) // i < "n" ---> "n" represents total number of codes ownered by the author.
+                for (int i = 0; i < 2000; i++) // i < "n" ---> "n" represents total number of codes ownered by the author.
                 {
                     var artworkCode = listOfArtworks.First();
                     listOfArtworks.RemoveAt(0);

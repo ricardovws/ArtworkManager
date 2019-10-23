@@ -32,20 +32,18 @@ namespace ArtworkManager.Data
             Author a1 = new Author(1, "Ricardo dos Santos", "RS85424", "SantosRicardoV@johndeere.com", t1);
             User u1 = new User();
             u1.Login = "ricardo";
-            u1.Name = "ricardo";
+            u1.Name = "Ricardo dos Santos";
             u1.Password = "ricardo";
             u1.OwnerId = 1;
             u1.Admin = true;
             u1.Id = 1;
 
 
-
-
             //Lucas Rech
             Author a2 = new Author(2, "Lucas Rech", "LR35023", "RechLucasP@johndeere.com", t1);
             User u2 = new User();
             u2.Login = "lucas";
-            u2.Name = "lucas";
+            u2.Name = "Lucas Rech";
             u2.Password = "lucas";
             u2.OwnerId = 2;
             u2.Admin = false;
@@ -55,8 +53,8 @@ namespace ArtworkManager.Data
             //Tassiane Strassburger
             Author a3 = new Author(3, "Tassiane Strassburger", "TS95756", "StrassburgerTassiane@johndeere.com", t1);
             User u3 = new User();
-            u3.Login = "TASSI";
-            u3.Name = "tassi";
+            u3.Login = "tassiane";
+            u3.Name = "Tassiane Strassburger";
             u3.Password = "tassi";
             u3.OwnerId = 3;
             u3.Admin = false;
@@ -64,10 +62,16 @@ namespace ArtworkManager.Data
 
 
             Author a4 = new Author(4, "Kaizan F Kolbek", "KK69021", "KolbekKaizanF@johndeere.com", t1);
+            User u4 = new User();
+            u4.Login = "kaizan";
+            u4.Name = "Kaizan F Kolbek";
+            u4.Password = "kaizan";
+            u4.OwnerId = 4;
+            u4.Admin = false;
+            u4.Id = 4;
 
-           
 
-          
+
 
 
 
@@ -75,18 +79,18 @@ namespace ArtworkManager.Data
 
             _context.Team.AddRange(t0, t1, t2);
             _context.Author.AddRange(a1, a2, a3, a4);
-            _context.User.AddRange(u1, u2, u3);
+            _context.User.AddRange(u1, u2, u3, u4);
 
             // Creating artworks...
 
             
             string x = "BM";
-            int n = 999; //Total of artworks!!!
+            int n = 999999; //Total of artworks!!!
             List<string> listOfArtworks = new List<string>();
             int num = 0;
             string number = num.ToString();
 
-            for (int i = 470; i <= n; i++) // "i" represents the first parameter code to begin the range!
+            for (int i = 47001; i <= n; i++) // "i" represents the first parameter code to begin the range!
             {
                 int id = i;
                 string q1code = number + i;
