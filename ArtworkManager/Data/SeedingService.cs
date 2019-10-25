@@ -18,7 +18,7 @@ namespace ArtworkManager.Data
 
         public void Seed()
         {
-            if (_context.Team.Any() || _context.Author.Any() || _context.Artwork.Any())
+            if (_context.Team.Any() || _context.Author.Any() || _context.Artwork.Any() || _context.ArtworkCode.Any())
             {
                 return; // DB has been seeded
             }
@@ -71,12 +71,7 @@ namespace ArtworkManager.Data
             u4.Id = 4;
 
 
-
-
-
-
-
-
+            
             _context.Team.AddRange(t0, t1, t2);
             _context.Author.AddRange(a1, a2, a3, a4);
             _context.User.AddRange(u1, u2, u3, u4);
@@ -106,35 +101,6 @@ namespace ArtworkManager.Data
                 
             }
 
-
-
-
-            //
-
-            //int idArtwork = 0;
-            //while (idArtwork < 10000)
-            //{
-            //idArtwork++;
-            //string codigoArtwork = "BM" + idArtwork.ToString().PadLeft(6, '0');
-            //Artwork item = new Artwork(idArtwork, codigoArtwork);
-            //if (idArtwork < 2600)
-            //{
-            //item.OwnerID = 1;
-            //}
-            //    else if (idArtwork < 5100)
-            //{
-            //item.OwnerID = 2;
-            //}
-            //    else if (idArtwork < 7600)
-            //{
-            //item.OwnerID = 3;
-            //}
-            //    else
-            //{
-            //item.OwnerID = 4;
-            //}
-            //_context.Artwork.Add(item);
-            //  }
 
            
             a1.LoadCodePack(listOfArtworks);

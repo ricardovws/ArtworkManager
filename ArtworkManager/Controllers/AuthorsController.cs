@@ -224,8 +224,9 @@ namespace ArtworkManager.Controllers
             author.TeamId = obj.TeamId;
             author.User = obj.User;
             author.Email = obj.Email;
-            _authorService.Pot(author);
             _authorService.InsertAuthor(author);
+            _authorService.Pot(author);
+           
 
 
 

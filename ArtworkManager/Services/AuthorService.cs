@@ -106,14 +106,35 @@ namespace ArtworkManager.Services
 
         public Artwork GetACode (Author owner)
         {
+            try { 
             return _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
+            }
+            catch
+            {
+                int n = 2000; // i < "n" ---> "n" represents total number of codes ownered by the author.
+                var codes = _context.ArtworkCode.Take(n).ToList();
 
+
+
+                foreach (var code in codes)
+                {
+                    _context.ArtworkCode.Remove(code);
+                    Artwork artwork = new Artwork();
+                    artwork.Id = code.Id;
+                    artwork.Code = code.ArtworkCodeCode;
+                    artwork.OwnerID = owner.Id;
+                    owner.AddCodeFromPot(artwork);
+                }
+                _context.SaveChanges();
+                return _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
+            }
         }
 
         //This method below uses a code from a existing publication code! (using for reference the last publication code used...)
 
         public void UseCode (Author owner)
         {
+           
             var objj = _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
             
             var obj1 = objj;
@@ -130,8 +151,11 @@ namespace ArtworkManager.Services
             obj1.PublicationCode = _context.Artwork.Last(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse).PublicationCode;
             }
 
-
             _context.Artwork.Add(obj1);
+            
+
+          
+
             _context.SaveChanges();
         }
 
@@ -139,20 +163,21 @@ namespace ArtworkManager.Services
         //This method below uses as reference a new publication code...
         public void UseNewCode(Author owner)
         {
+
             var objj = _context.Artwork.First(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.FreeToUse);
 
             var obj1 = objj;
 
             _context.Artwork.Remove(objj);
             _context.SaveChanges();
-            
             obj1.Status = Models.Enums.ArtworkStatus.Used;
             obj1.BirthDate = DateTime.Now;
             
-
-
-
             _context.Artwork.Add(obj1);
+            
+           
+
+
             _context.SaveChanges();
         }
 
@@ -215,18 +240,20 @@ namespace ArtworkManager.Services
         public void Pot (Author author)
         {
             int n = 2000; // i < "n" ---> "n" represents total number of codes ownered by the author.
+            var codes = _context.ArtworkCode.Take(n).ToList();
 
-            for (int i=0;i<n;i++)
+
+
+            foreach (var code in codes)
             {
-                var someArtworkCode = _context.ArtworkCode.First();
-                _context.ArtworkCode.Remove(someArtworkCode);
+                _context.ArtworkCode.Remove(code);
                 Artwork artwork = new Artwork();
-                artwork.Id = someArtworkCode.Id;
-                artwork.Code = someArtworkCode.ArtworkCodeCode;
+                artwork.Id = code.Id;
+                artwork.Code = code.ArtworkCodeCode;
                 artwork.OwnerID = author.Id;
                 author.AddCodeFromPot(artwork);
-                _context.SaveChanges();
             }
+            _context.SaveChanges();
 
 
 
