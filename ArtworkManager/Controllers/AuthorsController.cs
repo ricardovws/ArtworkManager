@@ -55,13 +55,7 @@ namespace ArtworkManager.Controllers
             return View();
         }
 
-        public IActionResult AskAboutCode()
-        {
-            return View();
-        }
-
-
-
+   
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -195,9 +189,14 @@ namespace ArtworkManager.Controllers
         public IActionResult Edit(int id, Artwork artwork)
         {
             var obj = _authorService.FindArtworkById(id);
-            obj.PublicationCode = artwork.PublicationCode;
-            _authorService.Update(id, obj);
-            return RedirectToAction(nameof(ShowAllCodes), new { id = obj.OwnerID });
+            if (obj.PublicationCode != null)
+            {
+                obj.PublicationCode = artwork.PublicationCode;
+                _authorService.Update(id, obj);
+                return RedirectToAction(nameof(ShowAllCodes), new { id = obj.OwnerID });
+            }
+                return RedirectToAction(nameof(YouCannotDoThat));
+
         }
 
 
@@ -265,6 +264,11 @@ namespace ArtworkManager.Controllers
                 _authorService.UpdateAuthor(obj.Author);
                 return RedirectToAction(nameof(Index));
           
+        }
+
+        public IActionResult YouCannotDoThat()
+        {
+            return View();
         }
 
 

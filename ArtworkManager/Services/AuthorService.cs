@@ -183,10 +183,7 @@ namespace ArtworkManager.Services
 
         public void Update(int id, Artwork obj)
         {
-            if (!_context.Artwork.Any(x=> x.Id == obj.Id && x.Status == Models.Enums.ArtworkStatus.Used))
-            {
-                throw new NotFoundException("You cannot update information from a non-used artwork.");
-            }
+           
             try
             {
                 _context.Update(obj);
