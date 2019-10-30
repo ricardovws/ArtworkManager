@@ -11,7 +11,7 @@
     <hr />
     <d1 class="dl-horizontal">
 
-        <textarea id="codigo">@Html.DisplayFor(model => model.Code)</textarea>
+        <textarea id="code">@Html.DisplayFor(model => model.Code)</textarea>
 
         <br>
 
@@ -26,7 +26,7 @@
         <button onclick="copy()">Copy</button>
         <script type="text/javascript">
             function copy() {
-                var copyText = document.getElementById("codigo");
+                var copyText = document.getElementById("code");
                 copyText.select();
                 copyText.setSelectionRange(0, 99999);
                 document.execCommand('copy');
