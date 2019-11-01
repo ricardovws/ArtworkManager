@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using ArtworkManager.Models;
 using ArtworkManager.Services;
 using Microsoft.AspNetCore.Mvc;
-using PagedList.Mvc;
-using PagedList;
 using ArtworkManager.Models.ViewModels;
 using ArtworkManager.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
