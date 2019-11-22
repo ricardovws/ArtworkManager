@@ -26,8 +26,19 @@ namespace ArtworkManager.Data
             Team t0 = new Team(3, "John Deere");
             Team t1 = new Team(1, "John Deere Luedtke");
             Team t2 = new Team(2, "N.E.I.V.A.");
-            
-           
+
+
+            //Rafael Neves Poersch - Manager
+            Author a5 = new Author(5, "Rafael Neves Poersch", "RP46668", "PoerschRafaelN@JohnDeere.com", t1);
+            User u5 = new User();
+            u5.Login = "rafael";
+            u5.Name = "Rafael Neves Poersch";
+            u5.Password = "rafael";
+            u5.OwnerId = 5;
+            u5.Admin = true;
+            u5.Id = 5;
+
+
             //Ricardo dos Santos
             Author a1 = new Author(1, "Ricardo dos Santos", "RS85424", "SantosRicardoV@johndeere.com", t1);
             User u1 = new User();
@@ -35,7 +46,7 @@ namespace ArtworkManager.Data
             u1.Name = "Ricardo dos Santos";
             u1.Password = "ricardo";
             u1.OwnerId = 1;
-            u1.Admin = true;
+            u1.Admin = false;
             u1.Id = 1;
 
 
@@ -60,7 +71,7 @@ namespace ArtworkManager.Data
             u3.Admin = false;
             u3.Id = 3;
 
-
+            //Kaizan Kolbek
             Author a4 = new Author(4, "Kaizan F Kolbek", "KK69021", "KolbekKaizanF@johndeere.com", t1);
             User u4 = new User();
             u4.Login = "kaizan";
@@ -73,19 +84,19 @@ namespace ArtworkManager.Data
 
             
             _context.Team.AddRange(t0, t1, t2);
-            _context.Author.AddRange(a1, a2, a3, a4);
-            _context.User.AddRange(u1, u2, u3, u4);
+            _context.Author.AddRange(a1, a2, a3, a4, a5);
+            _context.User.AddRange(u1, u2, u3, u4, u5);
 
             // Creating artworks...
 
             
-            string x = "BM";
+            string x = "BML";
             int n = 999999; //Total of artworks!!!
             List<string> listOfArtworks = new List<string>();
             int num = 0;
             string number = num.ToString();
 
-            for (int i = 47001; i <= n; i++) // "i" represents the first parameter code to begin the range!
+            for (int i = 000001; i <= n; i++) // "i" represents the first parameter code to begin the range!
             {
                 int id = i;
                 string q1code = number + i;
@@ -107,6 +118,7 @@ namespace ArtworkManager.Data
             a2.LoadCodePack(listOfArtworks);
             a3.LoadCodePack(listOfArtworks);
             a4.LoadCodePack(listOfArtworks);
+            a5.LoadCodePack(listOfArtworks);
 
 
             _context.SaveChanges();
