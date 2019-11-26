@@ -1,17 +1,22 @@
-﻿@model ArtworkManager.Models.Artwork
+﻿@model ArtworkManager.Models.ViewModels.ArtWorkFormViewModel
 @{
     ViewData["Title"] = "GetCode";
 }
 
 <h2></h2>
 
+<h3>Your last publication code used is:</h3>
+<textarea readonly id="publicationcode">@Html.DisplayFor(model => model.PublicationCode)</textarea>
+
+
 <h3>Below you can see your next free code to use:</h3>
 
 <div>
     <hr />
     <d1 class="dl-horizontal">
-                
-        <textarea id="code" >@Html.DisplayFor(model => model.Code)</textarea>
+
+                       
+        <textarea readonly id="code" >@Html.DisplayFor(model => model.Artwork.Code)</textarea>
         
         <br>
     
@@ -19,7 +24,7 @@
 
     </d1>
     <form asp-action="GetCode">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Artwork.Id" />
 
 
 

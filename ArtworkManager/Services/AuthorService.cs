@@ -61,6 +61,23 @@ namespace ArtworkManager.Services
             return data;
         }
 
+        public string ShowLastPublicationCode(Author author)
+        {
+            try
+            {
+                string publicationCode = _context.Artwork.Last(obj => obj.Status == Models.Enums.ArtworkStatus.Used && obj.Owner == author).PublicationCode;
+
+                return publicationCode;
+            }
+            catch
+            {
+                string publicationCode = _context.Artwork.First(obj => obj.Owner == author).PublicationCode;
+
+                return publicationCode;
+            }
+            
+        }
+
         public void AddPublicationCode(Author owner, string publicationcode)
         {
             

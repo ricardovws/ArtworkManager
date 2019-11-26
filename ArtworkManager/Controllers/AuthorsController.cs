@@ -70,7 +70,9 @@ namespace ArtworkManager.Controllers
         public IActionResult GetCode(int id)
         {
             var author = _authorService.FindAuthorById(id);
-            var obj = _authorService.GetACode(author);
+            string publicationcode = _authorService.ShowLastPublicationCode(author);
+            var artwork = _authorService.GetACode(author);
+            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode };
             return View(obj);
         }
         [HttpPost]
@@ -87,7 +89,9 @@ namespace ArtworkManager.Controllers
         public IActionResult GetNewCode(int id)
         {
             var author = _authorService.FindAuthorById(id);
-            var obj = _authorService.GetACode(author);
+            string publicationcode = _authorService.ShowLastPublicationCode(author);
+            var artwork = _authorService.GetACode(author);
+            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode };
             return View(obj);
         }
         [HttpPost]
@@ -187,7 +191,7 @@ namespace ArtworkManager.Controllers
         public IActionResult Edit(int id, Artwork artwork)
         {
             var obj = _authorService.FindArtworkById(id);
-            if (obj.PublicationCode != null)
+            if (obj.Status == Models.Enums.ArtworkStatus.Used)
             {
                 obj.PublicationCode = artwork.PublicationCode;
                 _authorService.Update(id, obj);
