@@ -91,7 +91,7 @@ namespace ArtworkManager.Data
 
             
             string x = "BML";
-            int n = 999999; //Total of artworks!!!
+            int n = 100; //Total of artworks!!!
             List<string> listOfArtworks = new List<string>();
             int num = 0;
             string number = num.ToString();

@@ -92,6 +92,7 @@ namespace ArtworkManager.Services
             obj1.PublicationCode = publicationcode;
 
 
+
             _context.Artwork.Add(obj1);
             _context.SaveChanges();
 
@@ -128,7 +129,7 @@ namespace ArtworkManager.Services
             }
             catch
             {
-                int n = 2000; // i < "n" ---> "n" represents total number of codes ownered by the author.
+                int n = 20; // i < "n" ---> "n" represents total number of codes ownered by the author.
                 var codes = _context.ArtworkCode.Take(n).ToList();
 
 
@@ -160,6 +161,9 @@ namespace ArtworkManager.Services
             _context.SaveChanges();
             obj1.Status = Models.Enums.ArtworkStatus.Used;
             obj1.BirthDate = DateTime.Now;
+            obj1.TypeOfArtwork = typeOfArwork;
+
+            //obj1.TypeOfArtwork = BASICO!!!!
            try { 
             obj1.PublicationCode = _context.Artwork.Last(obj => obj.Owner == owner && obj.Status == Models.Enums.ArtworkStatus.Used).PublicationCode;
             }

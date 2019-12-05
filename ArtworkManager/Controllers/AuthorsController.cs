@@ -71,6 +71,7 @@ namespace ArtworkManager.Controllers
         {
             var author = _authorService.FindAuthorById(id);
             string publicationcode = _authorService.ShowLastPublicationCode(author);
+            
             var artwork = _authorService.GetACode(author);
             var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode };
             return View(obj);
