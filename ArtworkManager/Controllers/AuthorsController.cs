@@ -73,14 +73,15 @@ namespace ArtworkManager.Controllers
             string publicationcode = _authorService.ShowLastPublicationCode(author);
             
             var artwork = _authorService.GetACode(author);
-            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode };
+            
+            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode};
             return View(obj);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult GetCode(Author author)
+        public IActionResult GetCode(Author author, bool typeofartwork)
         {
-            _authorService.UseCode(author);
+            _authorService.UseCode(author, typeofartwork);
             return RedirectToAction(nameof(GetCode));
         }
 
@@ -97,9 +98,9 @@ namespace ArtworkManager.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult GetNewCode(int id, Author author)
+        public IActionResult GetNewCode(int id, Author author, bool typeofartwork)
         {
-            _authorService.UseNewCode(author);
+            _authorService.UseNewCode(author, typeofartwork);
             return RedirectToAction(nameof(GetCode), new { id = id });
         }
 

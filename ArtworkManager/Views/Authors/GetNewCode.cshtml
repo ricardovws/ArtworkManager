@@ -22,7 +22,15 @@
     </d1>
     <form asp-action="GetNewCode">
         <input type="hidden" asp-for="Artwork.Id" />
-
+        
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    Is it an advanced artwork?<br />
+                    <input asp-for="TypeOfArtwork" /> @Html.DisplayNameFor(model => model.TypeOfArtwork)
+                </label>
+            </div>
+        </div>
 
 
         <button onclick="copy()">Copy</button>
