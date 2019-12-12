@@ -73,15 +73,29 @@ namespace ArtworkManager.Controllers
             string publicationcode = _authorService.ShowLastPublicationCode(author);
             
             var artwork = _authorService.GetACode(author);
+
+            var cookieValue = false;
+            if(Request.Cookies["ChooseType_"] != null)
+            {
+                cookieValue = bool.Parse(Request.Cookies["ChooseType_"]);
+            }
             
-            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode};
+
+            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode, TypeOfArtwork = cookieValue};
+            
+
             return View(obj);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult GetCode(Author author, bool typeofartwork)
         {
+         
+
             _authorService.UseCode(author, typeofartwork);
+
+            Response.Cookies.Append("ChooseType_", typeofartwork.ToString());
+
             return RedirectToAction(nameof(GetCode));
         }
 
@@ -101,7 +115,7 @@ namespace ArtworkManager.Controllers
         public IActionResult GetNewCode(int id, Author author, bool typeofartwork)
         {
             _authorService.UseNewCode(author, typeofartwork);
-            return RedirectToAction(nameof(GetCode), new { id = id });
+            return RedirectToAction(nameof(GetCode), new { id = id , typeofartwork = typeofartwork});
         }
 
         public IActionResult ShowAllCodes(Author author)
@@ -153,6 +167,13 @@ namespace ArtworkManager.Controllers
                     var itemLista = new ShowAllCodesViewModel();
                     itemLista.Id = item.Id;
                     itemLista.Code = item.Code;
+                    if (item.TypeOfArtwork == false)
+                    {
+                        itemLista.TypeOfArwork = "Basic";
+                    }
+                    else
+                        itemLista.TypeOfArwork = "Advanced";
+                    
                     itemLista.PublicationCode = item.PublicationCode;
                     if (item.BirthDate != DateTime.MinValue)
                     {

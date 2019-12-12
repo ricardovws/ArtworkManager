@@ -161,6 +161,8 @@ namespace ArtworkManager.Services
             _context.SaveChanges();
             obj1.Status = Models.Enums.ArtworkStatus.Used;
             obj1.BirthDate = DateTime.Now;
+
+                        
             obj1.TypeOfArtwork = typeofartwork;
 
            
