@@ -69,13 +69,43 @@ namespace ArtworkManager.Services
 
                 return publicationCode;
             }
+
+                     
+            
+
             catch
             {
-                string publicationCode = _context.Artwork.First(obj => obj.Owner == author).PublicationCode;
+                string publicationCode = "You have never used any artwork yet!";
 
                 return publicationCode;
             }
-            
+
+            //catch
+            //{
+            //    string publicationCode = _context.Artwork.First(obj => obj.Owner == author).PublicationCode;
+
+            //    return publicationCode;
+            //}
+
+        }
+
+        public string ShowLastArtworkUsed(Author author)
+        {
+            try
+            {
+                string artworkused = _context.Artwork.Last(obj => obj.Status == Models.Enums.ArtworkStatus.Used && obj.Owner == author).Code;
+
+                return artworkused;
+            }
+
+            catch
+            {
+                string artworkused = "You have never used any artwork yet!";
+
+                return artworkused;
+            }
+
+
         }
 
         public void AddPublicationCode(Author owner, string publicationcode)

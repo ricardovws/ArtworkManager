@@ -5,8 +5,11 @@
 
 <h2></h2>
 
-<h3>Your last publication code used is:</h3>
+<h4>Your last publication code used is:</h4>
 <textarea readonly id="publicationcode">@Html.DisplayFor(model => model.PublicationCode)</textarea>
+
+<h4>Your last artwork code used is:</h4>
+<textarea readonly id="artworkcode">@Html.DisplayFor(model => model.LastArtworkCodeUsed)</textarea>
 
 
 <h3>Below you can see your next free code to use:</h3>
@@ -24,16 +27,18 @@
 
     </d1>
 
-  
-    
+
+
 
     <form asp-action="GetCode">
         <input type="hidden" asp-for="Artwork.Id" />
-
+        
+      
         <div class="form-group">
             <div class="checkbox">
                 <label>
-                    Is it an advanced artwork?<br />
+                Is it an advanced artwork?<br />
+                    
                     <input asp-for="TypeOfArtwork" /> @Html.DisplayNameFor(model => model.TypeOfArtwork)
                 </label>
             </div>

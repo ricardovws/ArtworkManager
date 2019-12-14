@@ -1,6 +1,7 @@
 ﻿using ArtworkManager.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace ArtworkManager.Models
         public ArtworkStatus Status { get; set; }
         public DateTime BirthDate { get; set; }
 
+        [Display(Name = "Sure, it is!")]
         public bool TypeOfArtwork { get; set; }
 
         public Artwork()

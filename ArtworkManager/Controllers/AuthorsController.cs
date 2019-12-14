@@ -71,6 +71,7 @@ namespace ArtworkManager.Controllers
         {
             var author = _authorService.FindAuthorById(id);
             string publicationcode = _authorService.ShowLastPublicationCode(author);
+            string artworkcode = _authorService.ShowLastArtworkUsed(author);
             
             var artwork = _authorService.GetACode(author);
 
@@ -81,7 +82,7 @@ namespace ArtworkManager.Controllers
             }
             
 
-            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode, TypeOfArtwork = cookieValue};
+            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode, LastArtworkCodeUsed = artworkcode, TypeOfArtwork = cookieValue};
             
 
             return View(obj);
@@ -106,8 +107,9 @@ namespace ArtworkManager.Controllers
         {
             var author = _authorService.FindAuthorById(id);
             string publicationcode = _authorService.ShowLastPublicationCode(author);
+            string artworkcode = _authorService.ShowLastArtworkUsed(author);
             var artwork = _authorService.GetACode(author);
-            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode };
+            var obj = new ArtWorkFormViewModel { Artwork = artwork, PublicationCode = publicationcode, LastArtworkCodeUsed=artworkcode };
             return View(obj);
         }
         [HttpPost]

@@ -68,6 +68,7 @@ namespace ArtworkManager
             services.AddScoped<AuthorService>();
             services.AddScoped<UserService>();
             services.AddScoped<TeamService>();
+            services.AddScoped<ArtworkService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
