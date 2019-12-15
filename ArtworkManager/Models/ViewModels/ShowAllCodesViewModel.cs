@@ -12,6 +12,6 @@ namespace ArtworkManager.Models.ViewModels
         public string PublicationCode { get; set; }
         public string Status { get; set; }
         public string BirthDate { get; set; }
-        public string TypeOfArwork { get; set; }
+        public string TypeOfArtwork { get; set; }
     }
 }

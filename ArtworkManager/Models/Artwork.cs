@@ -17,7 +17,8 @@ namespace ArtworkManager.Models
         public ArtworkStatus Status { get; set; }
         public DateTime BirthDate { get; set; }
 
-        [Display(Name = "Sure, it is!")]
+        
+
         public bool TypeOfArtwork { get; set; }
 
         public Artwork()

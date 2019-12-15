@@ -171,10 +171,10 @@ namespace ArtworkManager.Controllers
                     itemLista.Code = item.Code;
                     if (item.TypeOfArtwork == false)
                     {
-                        itemLista.TypeOfArwork = "Basic";
+                        itemLista.TypeOfArtwork = "Basic";
                     }
                     else
-                        itemLista.TypeOfArwork = "Advanced";
+                        itemLista.TypeOfArtwork = "Advanced";
                     
                     itemLista.PublicationCode = item.PublicationCode;
                     if (item.BirthDate != DateTime.MinValue)

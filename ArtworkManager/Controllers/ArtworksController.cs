@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtworkManager.Controllers
 {
-    public class ArtworkController : Controller
+    public class ArtworksController : Controller
     {
 
         private readonly ArtworkService _artworkService;
 
-        public ArtworkController(ArtworkService artworkService)
+        public ArtworksController(ArtworkService artworkService)
         {
             _artworkService = artworkService;
         }
@@ -27,6 +27,8 @@ namespace ArtworkManager.Controllers
         {
 
             var result = _artworkService.FindByDate(minDate, maxDate);
+
+            
 
             return View(result);
         }

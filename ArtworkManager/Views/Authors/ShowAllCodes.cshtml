@@ -25,7 +25,7 @@
                 BirthDate
             </th>
             <th>
-                TypeofArtwork
+                TypeOfArtwork
             </th>
             <th>
                 PublicationCode
@@ -68,9 +68,11 @@
                 { "data": "id", "name": "id", "autoWidth": true },
                 { "data": "code", "name": "code", "autoWidth": true },
                 { "data": "status", "name": "status", "autoWidth": true },
+                
                 { "data": "birthDate", "name": "birthDate", "autoWidth": true },
-                { "data": "typeofArtwork", "name": "typeofArtwork", "autoWidth": true },
+                { "data": "typeOfArtwork", "name": "typeOfArtwork", "autoWidth": true },
                 { "data": "publicationCode", "name": "publicationCode", "autoWidth": true },
+                
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Authors/Edit/' + full.id + '">Edit</a>'; }
                 }
