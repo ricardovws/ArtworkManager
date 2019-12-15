@@ -16,10 +16,12 @@ namespace ArtworkManager.Models
         public string PublicationCode { get; set; }
         public ArtworkStatus Status { get; set; }
         public DateTime BirthDate { get; set; }
-
-        
-
         public bool TypeOfArtwork { get; set; }
+        public TypeOfArtwork Type { get; set; }
+
+
+
+
 
         public Artwork()
         {

@@ -16,18 +16,18 @@
 
             <div class="form-group">
                 <label for="minDate">Min Date</label>
-                <input type="date" class="form-control" name="minDate" />
+                <input type="date" class="form-control" name="minDate" value=@ViewData["minDate"]/>
             </div>
             <div class="form-group">
                 <label for="maxDate">Max Date</label>
-                <input type="date" class="form-control" name="maxDate" />
+                <input type="date" class="form-control" name="maxDate" value=@ViewData["maxDate"]/>
             </div>
 
             <buton typeof="submit" class="btn btn-primary">Filter</buton>
         </form>
     </div>
 </nav>
-<div class"panel panel-primary">
+<div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Total</h3>
 
@@ -37,21 +37,53 @@
             <thead>
                 <tr class="success">
                     <th>
-                        @Html.DisplayNameFor(model => model.Owner)
+                        @Html.DisplayNameFor(model => model.Owner.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Owner.User)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Owner.Team)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Code)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.TypeOfArtwork)
+                        @Html.DisplayNameFor(model => model.Type)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.PublicationCode)
                     </th>
-                   
+
                 </tr>
             </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Owner.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Owner.User)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Owner.Team.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PublicationCode)
+                    </td>
 
+                    <td></td>
+                </tr>
+                }
+            </tbody>
         </table>
 
     </div>

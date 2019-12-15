@@ -23,6 +23,15 @@ namespace ArtworkManager.Services
             return _context.Author.Include(obj => obj.Team).ToList();
         }
 
+        public Team FindTeamByAuthorId(int iD)
+        {
+            var author = _context.Author.First(x => x.Id == iD);
+            var teamId = author.TeamId;
+            var team = _context.Team.First(x => x.Id == teamId);
+
+            return team;
+        }
+
         public List<Author> ShowOnlyAAuthor(Author author)
         {
             return _context.Author.Include(obj => obj.Team).Where(obj => obj.Id == author.Id).ToList();

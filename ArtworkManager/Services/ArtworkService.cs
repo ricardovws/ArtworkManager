@@ -11,6 +11,7 @@ namespace ArtworkManager.Services
     {
         private readonly ArtworkManagerContext _context;
 
+
         public ArtworkService(ArtworkManagerContext context)
         {
             _context = context;
@@ -20,36 +21,12 @@ namespace ArtworkManager.Services
         public List<Artwork> FindByDate(DateTime? minDate, DateTime? maxDate)
         {
 
-            var result = _context.Artwork.Where(b => b.BirthDate >= minDate && b.BirthDate <= maxDate).ToList();
+            var result = _context.Artwork.Where(b => b.BirthDate >= minDate.Value && b.BirthDate <= maxDate.Value).ToList();
 
-            //result
-
+       
 
             return result;
 
-
-
-
-            //var result = from obj in _context.Artwork select obj;
-            //if (minDate.HasValue)
-            //{
-            //    result = result.Where(x => x.BirthDate >= minDate.Value);
-            //}
-
-            //if (maxDate.HasValue)
-            //{
-            //    result = result.Where(x => x.BirthDate <= maxDate.Value);
-            //}
-
-           
-
-            //return result
-            //    .Include(x => x.Owner)
-            //    .Include(x => x.Code)
-            //    .Include(x => x.TypeOfArtwork)
-            //    .Include(x => x.PublicationCode)
-            //    .OrderByDescending(x => x.BirthDate)
-            //    .ToList();
         }
     }
 }
