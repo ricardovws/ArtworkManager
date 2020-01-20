@@ -13,17 +13,17 @@
     <div class="container-fluid">
 
         <form class="navbar-form navbar-left" role="search">
-
             <div class="form-group">
-                <label for="minDate">Min Date</label>
-                <input type="date" class="form-control" name="minDate" value=@ViewData["minDate"]/>
+                <div class="form-group">
+                    <label for="minDate">Min Date</label>
+                    <input type="date" class="form-control" name="minDate"/>
+                </div>
+                <div class="form-group">
+                    <label for="maxDate">Max Date</label>
+                    <input type="date" class="form-control" name="maxDate"/>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="maxDate">Max Date</label>
-                <input type="date" class="form-control" name="maxDate" value=@ViewData["maxDate"]/>
-            </div>
-
-            <buton typeof="submit" class="btn btn-primary">Filter</buton>
+            <buton type="submit" class="btn btn-primary">Filter</buton>
         </form>
     </div>
 </nav>
@@ -43,7 +43,7 @@
                         @Html.DisplayNameFor(model => model.Owner.User)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Owner.Team)
+                        @Html.DisplayNameFor(model => model.BirthDate)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Code)
@@ -68,7 +68,7 @@
                         @Html.DisplayFor(modelItem => item.Owner.User)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Owner.Team.Name)
+                        @Html.DisplayFor(modelItem => item.BirthDate)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Code)

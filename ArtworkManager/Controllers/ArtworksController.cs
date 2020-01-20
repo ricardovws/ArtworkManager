@@ -25,46 +25,11 @@ namespace ArtworkManager.Controllers
             return View();
         }
 
-        public IActionResult SimpleReport(DateTime? minDate, DateTime? maxDate)
+        public async Task<IActionResult> SimpleReport(DateTime? minDate, DateTime? maxDate)
         {
-            if (!minDate.HasValue)
-            {
-                minDate = new DateTime(DateTime.Now.Year, 1, 1);
-            }
-            if (!maxDate.HasValue)
-            {
-                maxDate = DateTime.Now;
-            }
-
-
-            ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
-            ViewData["maxDate"] = minDate.Value.ToString("yyyy-MM-dd");
-            var result = _artworkService.FindByDate(minDate, maxDate);
-
-            foreach (Artwork art in result.ToList())
-            {
-                var artwork = result.First(b => b.BirthDate >= minDate.Value);
-                var artworkfull = artwork;
-                result.Remove(artwork);
-                var artworkId = artwork.OwnerID;
-                artworkfull.Owner = _authorService.FindAuthorById(artworkId);
-                artworkfull.Owner.Team = _authorService.FindTeamByAuthorId(artworkId);
-                if(artworkfull.TypeOfArtwork == true)
-                {
-                    artworkfull.Type = Models.Enums.TypeOfArtwork.Advanced;
-                }
-                else
-                {
-                    artworkfull.Type = Models.Enums.TypeOfArtwork.Basic;
-                }
-                
-                result.Add(artworkfull);
-            }
-
+            var result = await _artworkService.FindByDateAsync(minDate, maxDate);
             return View(result);
+
         }
-
-
-
     }
 }
