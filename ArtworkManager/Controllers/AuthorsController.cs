@@ -127,7 +127,18 @@ namespace ArtworkManager.Controllers
         }
 
         public IActionResult LoadData(int id)
+
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+            if(user.Admin != true)
+            {
+                if (user.OwnerId != id)
+                {
+                    return RedirectToAction("AccessDenied", "Users");
+                }
+            }
+            
             try
             {
                 var author = _authorService.FindAuthorById(id);
