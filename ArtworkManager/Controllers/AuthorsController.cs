@@ -50,6 +50,7 @@ namespace ArtworkManager.Controllers
 
         public IActionResult AddPublicationCode()
         {
+
             return View();
         }
 
@@ -69,6 +70,15 @@ namespace ArtworkManager.Controllers
 
         public IActionResult GetCode(int id)
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+          
+                if (user.OwnerId != id)
+                {
+                    return RedirectToAction("AccessDenied", "Users");
+                }
+           
+
             var author = _authorService.FindAuthorById(id);
             string publicationcode = _authorService.ShowLastPublicationCode(author);
             string artworkcode = _authorService.ShowLastArtworkUsed(author);
@@ -105,6 +115,14 @@ namespace ArtworkManager.Controllers
 
         public IActionResult GetNewCode(int id)
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+           
+                if (user.OwnerId != id)
+                {
+                    return RedirectToAction("AccessDenied", "Users");
+                }
+           
             var author = _authorService.FindAuthorById(id);
             string publicationcode = _authorService.ShowLastPublicationCode(author);
             string artworkcode = _authorService.ShowLastArtworkUsed(author);
@@ -116,6 +134,7 @@ namespace ArtworkManager.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GetNewCode(int id, Author author, bool typeofartwork)
         {
+
             _authorService.UseNewCode(author, typeofartwork);
             return RedirectToAction(nameof(GetCode), new { id = id , typeofartwork = typeofartwork});
         }
@@ -221,6 +240,14 @@ namespace ArtworkManager.Controllers
 
         public IActionResult Edit(int id)
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+          
+                if (user.OwnerId != id)
+                {
+                    return RedirectToAction("AccessDenied", "Users");
+                }
+            
             var obj = _authorService.FindArtworkById(id);
             return View(obj);
         }
@@ -277,6 +304,17 @@ namespace ArtworkManager.Controllers
 
         public IActionResult Update(int id)
         {
+
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+          
+                if (user.OwnerId != id)
+                {
+                    return RedirectToAction("AccessDenied", "Users");
+                }
+           
+
+
             if (id == 0)
             {
                 return NotFound();
