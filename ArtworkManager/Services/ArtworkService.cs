@@ -18,7 +18,7 @@ namespace ArtworkManager.Services
         }
 
   
-        public async Task<List<Artwork>> FindByDateAsync(DateTime? minDate, DateTime? maxDate)
+        public List<Artwork> FindByDate(DateTime? minDate, DateTime? maxDate)
         {
             var result = from obj in _context.Artwork select obj;
             if (minDate.HasValue)
@@ -29,9 +29,10 @@ namespace ArtworkManager.Services
             {
                 result = result.Where(x => x.BirthDate <= maxDate.Value);
             }
-            return await result
+
+            return result
                 .Include(x => x.Owner)                
-                .ToListAsync();
+                .ToList();
         }
     }
 }

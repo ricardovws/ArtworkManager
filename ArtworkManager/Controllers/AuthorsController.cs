@@ -169,12 +169,7 @@ namespace ArtworkManager.Controllers
                     var itemLista = new ShowAllCodesViewModel();
                     itemLista.Id = item.Id;
                     itemLista.Code = item.Code;
-                    if (item.TypeOfArtwork == false)
-                    {
-                        itemLista.TypeOfArtwork = "Basic";
-                    }
-                    else
-                        itemLista.TypeOfArtwork = "Advanced";
+                   
                     
                     itemLista.PublicationCode = item.PublicationCode;
                     if (item.BirthDate != DateTime.MinValue)
@@ -189,6 +184,16 @@ namespace ArtworkManager.Controllers
                     {
                         itemLista.Status = "Used";
                     }
+                    if (item.TypeOfArtwork == false && item.Status == Models.Enums.ArtworkStatus.Used)
+                    {
+                        itemLista.TypeOfArtwork = "Basic";
+                    }
+                    if (item.TypeOfArtwork == true && item.Status == Models.Enums.ArtworkStatus.Used)
+                    {
+                        itemLista.TypeOfArtwork = "Advanced";
+                    }
+                   
+
                     listArtworks.Add(itemLista);
                 }
                 //Paging   
