@@ -2,7 +2,7 @@
 
 
 
-@{ ViewData["Title"] = "Simple Report!!!";
+@{ ViewData["Title"] = "Simple Report";
 }
 
 
@@ -32,6 +32,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">Total of basic artworks: @Model.Where(obj => obj.Type == 0 && obj.Status == ArtworkManager.Models.Enums.ArtworkStatus.Used).Count()</h3>
         <h3 class="panel-title">Total of advanced artworks: @Model.Where(obj => obj.Type != 0 && obj.Status == ArtworkManager.Models.Enums.ArtworkStatus.Used).Count()</h3>
+        <h3 class="panel-title">Total of advanced artworks: @Model.Where(obj => obj.Status == ArtworkManager.Models.Enums.ArtworkStatus.Used).Count()</h3>
 
     </div>
     <div class="panel-body">

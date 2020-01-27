@@ -16,12 +16,15 @@ namespace ArtworkManager.Controllers
         private readonly AuthorService _authorService;
         private readonly UserService _userService;
         private readonly TeamService _teamService;
+        private readonly ArtworkService _artworkService;
 
-        public AuthorsController(AuthorService authorService, UserService userService, TeamService teamService)
+
+        public AuthorsController(AuthorService authorService, UserService userService, TeamService teamService, ArtworkService artworkService)
         {
             _authorService = authorService;
             _userService = userService;
             _teamService = teamService;
+            _artworkService = artworkService;
         }
 
 
@@ -60,6 +63,13 @@ namespace ArtworkManager.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddPublicationCode(string publicationcode, int id)
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+
+            if (user.OwnerId != id)
+            {
+                return RedirectToAction("AccessDenied", "Users");
+            }
             var author = _authorService.FindAuthorById(id);
             _authorService.AddPublicationCode(author, publicationcode);
             return RedirectToAction(nameof(GetNewCode), new { id = id });
@@ -242,13 +252,14 @@ namespace ArtworkManager.Controllers
         {
             var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
             var user = _authorService.FindUserById(idUser);
-          
-                if (user.OwnerId != id)
+            var obj = _authorService.FindArtworkById(id);
+            var ownerId = obj.OwnerID;
+
+            if (user.OwnerId != ownerId)
                 {
                     return RedirectToAction("AccessDenied", "Users");
                 }
             
-            var obj = _authorService.FindArtworkById(id);
             return View(obj);
         }
 
@@ -262,6 +273,7 @@ namespace ArtworkManager.Controllers
             if (obj.Status == Models.Enums.ArtworkStatus.Used)
             {
                 obj.PublicationCode = artwork.PublicationCode;
+                obj.TypeOfArtwork = artwork.TypeOfArtwork;
                 _authorService.Update(id, obj);
                 return RedirectToAction(nameof(ShowAllCodes), new { id = obj.OwnerID });
             }
