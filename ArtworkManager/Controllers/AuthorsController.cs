@@ -320,7 +320,7 @@ namespace ArtworkManager.Controllers
             var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
             var user = _authorService.FindUserById(idUser);
           
-                if (user.OwnerId != id)
+                if (user.Admin != true)
                 {
                     return RedirectToAction("AccessDenied", "Users");
                 }
