@@ -43,8 +43,8 @@ namespace ArtworkManager
                         var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                         config.Filters.Add(new AuthorizeFilter(policy));
                     }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(
-            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-        );
+                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddAuthentication(options =>
             {
