@@ -127,7 +127,10 @@ namespace ArtworkManager.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Remove(user);
+                    await _context.SaveChangesAsync();
+                    user.OwnerId = id;
+                    _context.Add(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
