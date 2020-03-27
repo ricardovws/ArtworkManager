@@ -1,11 +1,14 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ArtworkManager.Models;
 using ArtworkManager.Services;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 
 namespace ArtworkManager.Controllers
 {
@@ -26,7 +29,7 @@ namespace ArtworkManager.Controllers
             return View();
         }
 
-        public IActionResult SimpleReport(int iD, DateTime? minDate, DateTime? maxDate)
+        public IActionResult SimpleReport(DateTime? minDate, DateTime? maxDate)
         {
             if (!minDate.HasValue)
             {
@@ -62,13 +65,13 @@ namespace ArtworkManager.Controllers
 
                 result.Add(artworkfull);
             }
-
-            ExportExcel(iD, result, minDate, maxDate);
-
-            return View(result);
-
+           
+                ExportExcel(result, minDate, maxDate);
+                return View(result);
+          
+        
         }
-        private void ExportExcel(int iD, List<Artwork> result, DateTime? minDate, DateTime? maxDate)
+        private void ExportExcel(List<Artwork> result, DateTime? minDate, DateTime? maxDate)
         {
 
 
@@ -76,40 +79,84 @@ namespace ArtworkManager.Controllers
 
             var path = Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "reports"));
 
-            var reportName = iD.ToString() + "___" + minDate.ToString() + maxDate.ToString() + "___" + DateTime.Now.ToString();
+            //var reportName = iD.ToString() + "___" + minDate.Value.DayOfYear.ToString() + maxDate.Value.DayOfYear.ToString() + "___";
+
+            var reportName = "Report___.xlsx";
 
 
             //Create a .xls file
 
             //*******
-            try
+
+            //ExcelPackage
+            
+
+            using (var excelPackage = new ExcelPackage(new FileInfo("MyWorkbook.xlsx")))
             {
-                var testPath = @"C:\Users\Ricardo\OneDrive\Documentos\-practicing-c-sharp\ArtworkManager\wwwroot\lib\jquery-validation-unobtrusive";
+                excelPackage.Workbook.Properties.Author = "Artwork Manager"; 
+                excelPackage.Workbook.Properties.Title = "The Report"; 
 
-                FileInfo fileInfo = new FileInfo(testPath + "\\LICENSE.txt");
-                fileInfo.CopyTo(path + "\\LICENSE________________________.txt");
+                // Below I create a file
+                var sheet = excelPackage.Workbook.Worksheets.Add("###");
+                sheet.Name = "###";
+
+
+
+                //Header
+                //
+                var i = 1;
+                var titles = new String[] { "Name", "User", "Code", "BirthDate", "Type", "PublicationCode" }; // Header titles
+                foreach (var title in titles)
+                {
+                    sheet.Cells[1, i++].Value = title;
+                }
+                sheet.Cells["A1:F1"].Style.Font.Bold = true; // turns header bold
+
+                //objects
+
+
+                List<String[]> listToExport = new List<string[]>();
+
+             
+
+                foreach (var line in result)
+                {
+                    var finalList = new String[] { line.Owner.Name.ToString(), line.Owner.User.ToString(), line.Code.ToString()
+                        , line.BirthDate.ToString("dd/MM/yyyy HH:mm:ss")
+                        , line.Type.ToString()
+                        , line.PublicationCode.ToString()
+
+                    };
+                    listToExport.Add(finalList);
+                }
+
+                //Values
+                i = 2;
+                int j = 1;
+
+                var values = listToExport;
+
+                foreach (var value in values)
+                {
+
+                    foreach (var val in value)
+                    {
+                        sheet.Cells[i, j++].Value = val;
+
+                    }
+                    i++;
+                    j = 1;
+                }
+
+                string finalPath = path +"\\"+reportName; //file path
+             
+                excelPackage.SaveAs(new FileInfo(finalPath));
+
             }
-            catch (IOException)
-            {
-                System.IO.File.SetAttributes(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "reports") + "\\LICENSE________________________.txt", FileAttributes.Normal);
 
-                System.IO.File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "reports") + "\\LICENSE________________________.txt");
-
-                //System.IO.Directory.Delete(@"C:\Users\Ricardo\OneDrive\Documentos\-practicing-c-sharp\ArtworkManager\wwwroot\reports", true);
-
-
-                var testPath = @"C:\Users\Ricardo\OneDrive\Documentos\-practicing-c-sharp\ArtworkManager\wwwroot\lib\jquery-validation-unobtrusive";
-                var path1 = Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "reports"));
-                FileInfo fileInfo = new FileInfo(testPath + "\\LICENSE.txt");
-                fileInfo.CopyTo(path1 + "\\LICENSE________________________.txt");
-
-            }
-
-
-
+          
         }
-
-        public ActionResult DownloadFile(int iD)
+        public ActionResult DownloadFile()
         {
             //Download the only file in the directory called "reports"" 
 
@@ -120,7 +167,7 @@ namespace ArtworkManager.Controllers
                   "wwwroot", "reports");
 
             var files = Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories);
-            var file = files.FirstOrDefault().Split('\\'); //get the file to download as soon as possible
+            var file = files.FirstOrDefault().Split('\\');
             var _file = file.Last();
 
             var fullPath = path + "\\" + _file;
@@ -132,11 +179,8 @@ namespace ArtworkManager.Controllers
             memory.Position = 0;
             var ext = Path.GetExtension(fullPath).ToLowerInvariant();
             return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Path.GetFileName(fullPath));
+            
 
-          
-           // return View();
         }
-
-
     }
 }
