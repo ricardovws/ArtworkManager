@@ -26,11 +26,27 @@ namespace ArtworkManager.Controllers
 
         public IActionResult Index()
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+
+            if (user.Admin != true)
+            {
+                return RedirectToAction("AccessDenied", "Users");
+            }
             return View();
         }
 
         public IActionResult SimpleReport(DateTime? minDate, DateTime? maxDate)
         {
+            var idUser = Int32.Parse(User.FindFirst("IdUsuario")?.Value);
+            var user = _authorService.FindUserById(idUser);
+
+            if (user.Admin != true)
+            {
+                return RedirectToAction("AccessDenied", "Users");
+            }
+           
+
             if (!minDate.HasValue)
             {
                 minDate = new DateTime(DateTime.Now.Year, 1, 1);
